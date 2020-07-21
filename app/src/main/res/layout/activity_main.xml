@@ -8,11 +8,13 @@
     android:layout_height="match_parent">
 
 
-    <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="159dp"
         tools:openDrawer="start">
 
 
@@ -32,17 +34,73 @@
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:layout_gravity="left"
+            android:background="#ffffff"
             android:orientation="vertical"
-            android:background="#bebab4">
+            android:theme="@style/AppTheme">
+
+            <ImageView
+                android:layout_marginTop="30dp"
+                android:id="@+id/imageView"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/nav_header_desc"
+                android:paddingTop="@dimen/nav_header_vertical_spacing"
+                app:srcCompat="@drawable/character" />
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingTop="@dimen/nav_header_vertical_spacing"
+                android:text="@string/nav_header_title"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+            <TextView
+                android:id="@+id/user_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/nav_header_subtitle"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/user_images"
+                android:layout_marginTop="60dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=""
+                android:textAlignment="center" />
+
+
+
+            <Button
+                android:layout_marginTop="150dp"
+                android:layout_gravity="end"
+                android:id="@+id/db_logout"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/radius"
+                android:text="Logout"
+                android:textColor="#ffffff" />
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/user_logout"
-                android:layout_width="160dp"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                />
+                android:bottomLeftRadius="10dp"
+                android:bottomRightRadius="10dp"
+                android:textAlignment="center"
+                android:gravity="end"
+                android:topLeftRadius="10dp"
+                android:topRightRadius="10dp" />
+
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 

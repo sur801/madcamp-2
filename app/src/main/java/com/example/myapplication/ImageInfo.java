@@ -3,20 +3,19 @@ import com.google.gson.annotations.SerializedName;
 public class ImageInfo {
     //    private List<Date> date;
     private boolean is_edited;
-    @SerializedName("my_name")
+    @SerializedName("my_email")
     private String email;
     @SerializedName("_id")
     private String id;
     private String name;
     private String title;
     private String review;
-    private String likes;
+    private int likes;
     private String rate;
     @SerializedName("_v")
     private int v;
 
-    public ImageInfo(boolean is_edited, String email, String id, String name, String review, String likes, String rate, String title, int v) {
-
+    public ImageInfo(boolean is_edited, String email, String id, String name, String review, int likes, String rate, String title, int v) {
         this.is_edited = is_edited;
         this.email = email;
         this.id = id;
@@ -27,7 +26,7 @@ public class ImageInfo {
         this.v = v;
     }
 
-    public String getLikes() {
+    public int getLikes() {
         return likes;
     }
 

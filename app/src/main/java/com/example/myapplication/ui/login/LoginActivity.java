@@ -7,9 +7,13 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.os.AsyncTask;
+<<<<<<< HEAD
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+=======
+import android.os.Bundle;
+>>>>>>> origin
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -89,16 +89,12 @@ public class MemoFragment extends Fragment {
             @Override
             public void onResponse(Call<List<ImageInfo>> call, Response<List<ImageInfo>> response) {
                 // temp image list
-                List<ImageInfo> temp = null;
+                List<ImageInfo> temp = new ArrayList<>();
                 // image list
                 temp = response.body();
-                for(int i=0 ; i<temp.size() ; i++){
-                    feed_list.add(temp.get(i));
-                }
-                if(temp.size()!=0) {
-                    memo_adapter.memo_data = feed_list;
-                    memo_adapter.notifyDataSetChanged();
-                }
+                if(temp.size()!=0) feed_list = temp;
+                memo_adapter.setItem(feed_list);
+                memo_adapter.notifyDataSetChanged();
             }
 
 
@@ -149,9 +145,7 @@ public class MemoFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_memo);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         // 메모 아답터를 생성해준다
-        System.out.println("make adapter");
-        System.out.println("feed size : " + feed_list.size());
-        memo_adapter = new Memo_Adapter(feed_list , getActivity());
+        memo_adapter = new Memo_Adapter(getActivity());
 
 
         // 현재 내 이메일을 가져온다
@@ -173,7 +167,7 @@ public class MemoFragment extends Fragment {
         // 메모 아답터를 생성해준다
         System.out.println("make adapter");
         System.out.println("feed size : " + feed_list.size());
-        memo_adapter = new Memo_Adapter(feed_list , getActivity());
+        memo_adapter.setItem(feed_list);
 
         // 리사이클러 뷰에 대해 아답터를 설정해준다.
         recyclerView.setAdapter(memo_adapter);

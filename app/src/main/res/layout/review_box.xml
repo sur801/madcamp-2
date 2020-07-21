@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:paddingRight="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/text_review_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:text="영화 리뷰"
+            android:fontFamily="@font/dxregular"
+            android:typeface="serif"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_review_title"
+            android:text="영화 제목"
+            android:fontFamily="@font/dxregular"
+            android:typeface="serif"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/edittext_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_title"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:textStyle="bold">
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/text_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edittext_title"
+            android:layout_marginTop="147dp"
+            android:text="후기"
+            android:fontFamily="@font/dxregular"
+            android:typeface="serif"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/edittext_content"
+            android:layout_width="328dp"
+            android:layout_height="70dp"
+            android:layout_below="@+id/text_content"
+            android:layout_marginTop="-3dp"
+            android:layout_marginBottom="10dp"
+            android:ems="10" />
+
+        <TextView
+            android:id="@+id/text_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edittext_content"
+            android:text="평점"
+            android:fontFamily="@font/dxregular"
+            android:typeface="serif"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/edittext_rate"
+            android:layout_width="373dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_rate"
+            android:layout_marginBottom="10dp"
+            android:ems="10" />
+
+        <Button
+            android:id="@+id/review_submit"
+            android:layout_width="151dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edittext_rate"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="103dp"
+            android:layout_marginLeft="103dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="88dp"
+            android:layout_marginRight="88dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/colorAccent"
+            android:fontFamily="@font/dxregular"
+            android:text="친구에게 공유하기"
+            android:typeface="serif" />
+
+        <ImageView
+            android:id="@+id/moview_img"
+            android:layout_width="172dp"
+            android:layout_height="153dp"
+            android:layout_below="@+id/edittext_title"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="80dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="80dp"
+            android:layout_marginRight="80dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

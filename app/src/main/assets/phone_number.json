@@ -1,0 +1,28 @@
+{
+  "phone_number" : [
+  {
+    "name" : "산체스",
+    "phone_num" : "010-1234-1234",
+    "age" : "15학번",
+    "friend_email" : "abc@abc.com"
+  },
+  {
+    "name" : "오바마",
+    "phone_num" : "010-1232-1231",
+    "age" : "16학번",
+    "friend_email" : "abc2@abc2.com"
+  },
+  {
+    "name" : "트럼프",
+    "phone_num" : "010-1274-1254",
+    "age" : "17학번",
+    "friend_email" : "abc3@abc3.com"
+  },
+  {
+    "name" : "베니테즈",
+    "phone_num" : "010-1934-1534",
+    "age" : "18학번",
+    "friend_email" : "abc4@abc4.com"
+  }
+  ]
+}

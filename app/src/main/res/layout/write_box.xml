@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="354dp"
+        android:layout_height="414dp"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:paddingRight="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textv2_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:text="DB 번호 추가"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/textv1_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textv2_write"
+            android:text="이름"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/edittextName_write"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textv1_write"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:textStyle="bold">
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/textviewPhone_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edittextName_write"
+            android:text="전화번호"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/edittextPhone_write"
+            android:layout_width="373dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textviewPhone_write"
+            android:layout_marginBottom="10dp"
+            android:ems="10" />
+
+        <TextView
+            android:id="@+id/textviewEmail_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edittextPhone_write"
+            android:text="이메일"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/edittextEmail_write"
+            android:layout_width="373dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textviewEmail_write"
+            android:layout_marginBottom="10dp"
+            android:ems="10" />
+
+        <Button
+            android:id="@+id/write_submit"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edittextEmail_write"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="작성 완료" />
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

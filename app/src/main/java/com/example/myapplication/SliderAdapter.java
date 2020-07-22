@@ -87,19 +87,18 @@ public class SliderAdapter extends PagerAdapter {
         String review = imageList.get(position).getReview();
         String rate = imageList.get(position).getRate();
         String title = imageList.get(position).getTitle();
-        String likes = imageList.get(position).getLikes();
+        int likes = imageList.get(position).getLikes();
 
         Glide.with(mCont).load(imageUrl).into(imageView);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 500);
 
         imageView.setLayoutParams(layoutParams);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setRotation(90);
 
         textView_title.setText(title);
         textView_rates.setText(rate);
         textView_content.setText(review);
-        textView_likes.setText(likes);
+        textView_likes.setText(Integer.toString(likes));
 
         container.addView(v);
 

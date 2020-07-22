@@ -28,6 +28,7 @@ import android.widget.Toast;
 import androidx.annotation.AnimatorRes;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -105,6 +106,9 @@ public class Telephone extends Fragment implements View.OnClickListener{
     // 현재 내 이메일
     String current_email;
 
+    // 업로드 여부
+    String flag_upload;
+
     // floating action button을 위함
     private Animation fab_open, fab_close;
     private Boolean isFabOpen = false;
@@ -131,9 +135,9 @@ public class Telephone extends Fragment implements View.OnClickListener{
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager); // LayoutManager 등록
-        myAdapter = new MyAdapter(phoneList);
+        myAdapter = new MyAdapter();
         recyclerView.setAdapter(myAdapter);  // Adapter 등록
-
+        myAdapter.setItem(phoneList);
         getContacts(getActivity());
 
         // 버튼 설정
@@ -161,6 +165,12 @@ public class Telephone extends Fragment implements View.OnClickListener{
             }
         };
         return view;
+    }
+    // refresh fragment when image data updated
+    public void refreshFragment(){
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+        transaction.detach(this).attach(this).commit();
     }
 
     @Override
@@ -223,13 +233,24 @@ public class Telephone extends Fragment implements View.OnClickListener{
 
     // json, 내 단말기 전화번호를 DB로 내려준다
     public void json_phoneBook_to_DB(){
-        String json_str = getJsonString();
-        jsonParsing(json_str, 1);
-        new JSONTask().execute("http://192.249.19.241:3880/api/addressbook/");//AsyncTask 시작시킴
+        // 디비에 저장했는지 여부
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("flag_upload",Context.MODE_PRIVATE);
+        flag_upload = sharedPreferences.getString("flag_upload", "no");
+        System.out.println("flag_upload ! : " + flag_upload+"}");
 
-        /*휴대폰 주소록 -> DB 다운로드*/
-        new JSONTask5().execute("http://192.249.19.241:3880/api/addressbook/");//AsyncTask 시작시킴
+        if(flag_upload.equals("yes")) {
+            String json_str = getJsonString();
+            jsonParsing(json_str, 1);
+            new JSONTask().execute("http://192.249.19.241:3880/api/addressbook/");//AsyncTask 시작시킴
 
+            /*휴대폰 주소록 -> DB 다운로드*/
+            new JSONTask5().execute("http://192.249.19.241:3880/api/addressbook/");//AsyncTask 시작시킴
+
+            // 현재 이메일 임시로 저장해두기
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("flag_upload", "no");
+            editor.commit();
+        }
         /*DB -> 휴대폰 업로드*/
         new JSONTask2().execute("http://192.249.19.241:3880/api/addressbook/phone_all");//AsyncTask 시작시킴
     }
@@ -270,19 +291,19 @@ public class Telephone extends Fragment implements View.OnClickListener{
     }
 
     // 하나 DB에서 삭제하려 함
-    public void show_delete_box(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        public void show_delete_box(){
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        LayoutInflater inflater = getLayoutInflater();
-        View view = inflater.inflate(R.layout.delete_box, null);
-        builder.setView(view);
+            LayoutInflater inflater = getLayoutInflater();
+            View view = inflater.inflate(R.layout.delete_box, null);
+            builder.setView(view);
 
-        final Button submit = (Button)view.findViewById(R.id.del_submit);
-        final EditText _name = (EditText)view.findViewById(R.id.edittextName);
-        final EditText _phone = (EditText)view.findViewById(R.id.edittextPhone);
+            final Button submit = (Button)view.findViewById(R.id.del_submit);
+            final EditText _name = (EditText)view.findViewById(R.id.edittextName);
+            final EditText _phone = (EditText)view.findViewById(R.id.edittextPhone);
 
-        final  AlertDialog dialog = builder.create();
-        submit.setOnClickListener(new View.OnClickListener() {
+            final  AlertDialog dialog = builder.create();
+            submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 del_name = _name.getText().toString();
@@ -415,6 +436,7 @@ public class Telephone extends Fragment implements View.OnClickListener{
                 BufferedReader reader = null;
 
                 try {
+
                     URL url = new URL(urls[0]);
 
                     // 연결을 해준다
@@ -453,7 +475,9 @@ public class Telephone extends Fragment implements View.OnClickListener{
                     jsonParsing(_path,3 );
                     Log.d("\"JSONTask2 에러 찾기2\"", "doInBackground: >>>>>>>>>>>>>>>>" + _path);
                     // DB 내용 리사이클러 뷰 올리기
-                    for(int i=last_update_idx ; i < allArray.length() ; i++){
+
+                    ArrayList<phone> temp = new ArrayList<phone>();
+                    for(int i=0 ; i < allArray.length() ; i++){
                         JSONObject tmp_object = allArray.getJSONObject(i);
 
                         phone phone_arr = new phone();
@@ -461,7 +485,7 @@ public class Telephone extends Fragment implements View.OnClickListener{
                         phone_arr.setName(tmp_object.getString("friend_name"));
                         phone_arr.setPhone_num(tmp_object.getString("friend_phone"));
 
-                        phoneList.add(phone_arr);
+                        temp.add(phone_arr);
 
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -471,6 +495,10 @@ public class Telephone extends Fragment implements View.OnClickListener{
                         });
                     }
                     last_update_idx = allArray.length();
+
+                    phoneList = temp;
+                    myAdapter.setItem(phoneList);
+                    myAdapter.notifyDataSetChanged();
 
                     // 결과 버퍼 내용을 문자열로 바꿔서 리턴한다
                     return buffer.toString();
@@ -601,7 +629,10 @@ public class Telephone extends Fragment implements View.OnClickListener{
                         buffer.append(line);
                     }
                     Log.d("\"JSONTask4 에러 찾기\"2", "doInBackground: >>>>>>>>>>>>>" + buffer.toString());
+                    myAdapter.notifyDataSetChanged();
+                    refreshFragment();
                     return buffer.toString();
+
 
                 } catch (MalformedURLException e){
                     e.printStackTrace();
@@ -948,8 +979,11 @@ public class Telephone extends Fragment implements View.OnClickListener{
 
         private ArrayList<phone> myDataList = null;
 
-        MyAdapter(ArrayList<phone> dataList) {
-            myDataList = dataList;
+        MyAdapter() {
+
+        }
+        public void setItem(ArrayList<phone> item_list){
+            myDataList = item_list;
         }
 
         @Override
@@ -1019,9 +1053,14 @@ public class Telephone extends Fragment implements View.OnClickListener{
 
         private ArrayList<Telephone.phone> myDataList = null;
 
-        MyAdapter2(ArrayList<Telephone.phone> dataList)
+        public void MyAdapter2()
         {
-            myDataList = dataList;
+
+        }
+
+        public void setItem(ArrayList<Telephone.phone> itemlist)
+        {
+            myDataList = itemlist;
         }
 
         @Override

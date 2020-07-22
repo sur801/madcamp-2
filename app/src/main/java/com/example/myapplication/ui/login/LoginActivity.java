@@ -7,13 +7,9 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.os.AsyncTask;
-<<<<<<< HEAD
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
-=======
-import android.os.Bundle;
->>>>>>> origin
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,6 +94,13 @@ public class LoginActivity extends AppCompatActivity {
         AccessToken accessToken=AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
         if(isLoggedIn){
+            // DB 에 다운로드를 한 번만 하기 위함
+            SharedPreferences sharedPreferences2 = getSharedPreferences("flag_upload",Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor2 = sharedPreferences2.edit();
+            editor2.putString("flag_upload", "yes");
+            Log.d("asdasd", ">>>>>>>>>>>>>>" + "여깁니다");
+            editor2.commit();
+
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
@@ -137,10 +140,6 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString("tmp_email", email);
                                     editor.commit();
 
-                                    String test = sharedPreferences.getString("tmp_email", null);
-                                    System.out.println("test ! : " + test);
-
-
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                     finish();
 
@@ -176,15 +175,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
-
         // 로그인 버튼 설정
         _button_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 tmp_email = _email.getText().toString();
                 tmp_pwd = _password.getText().toString();
-
+                Log.d("ㅁㄴㅇㅁㄴㅇㅁ", "onClick: >>>>>>>>>" + tmp_email + " " + tmp_pwd);
                 flag_login_signup = val_login;
                 new Login_Signup().execute("http://192.249.19.241:3880/api/login/");//AsyncTask 시작시킴
             }
@@ -351,11 +348,30 @@ public class LoginActivity extends AppCompatActivity {
                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
 
                     // 작성
-                    String post_body = "{\"my_email\":\"" + sign_email + "\",\"my_pwd\" :\"" + sign_pwd + "\", \"my_name\":\""+sign_name+"\",\"my_phone_num\":\""+sign_phone_num+"\"}";
-                    Log.d("야 ", "로그인 신호 어떻게 보내냐: >>>>" + post_body);
-                    writer.write(post_body);
-                    writer.flush();
-                    writer.close();
+                    String post_body;
+
+                    if(flag_login_signup == val_login) {
+                        post_body = "{\"my_email\":\"" + tmp_email + "\",\"my_pwd\" :\"" + tmp_pwd + "\", \"my_name\":\""+sign_name+"\",\"my_phone_num\":\""+sign_phone_num+"\"}";
+                        Log.d("야 ", "로그인 신호 어떻게 보내냐: >>>>" + post_body);
+
+                        writer.write(post_body);
+                        writer.flush();
+                        writer.close();
+
+                    }
+                    else if(flag_login_signup == val_signup) {
+                        post_body = "{\"my_email\":\"" + sign_email + "\",\"my_pwd\" :\"" + sign_pwd + "\", \"my_name\":\"" + sign_name + "\",\"my_phone_num\":\"" + sign_phone_num + "\"}";
+                        Log.d("야 ", "회원가입 신호 어떻게 보내냐: >>>>" + post_body);
+
+                        writer.write(post_body);
+                        writer.flush();
+                        writer.close();
+                    }
+//                    String post_body = "{\"my_email\":\"" + sign_email + "\",\"my_pwd\" :\"" + sign_pwd + "\", \"my_name\":\""+sign_name+"\",\"my_phone_num\":\""+sign_phone_num+"\"}";
+//                    Log.d("야 ", "로그인 신호 어떻게 보내냐: >>>>" + post_body);
+//                    writer.write(post_body);
+//                    writer.flush();
+//                    writer.close();
 
                     // 받아오기
                     InputStream stream = con.getInputStream();
@@ -372,8 +388,10 @@ public class LoginActivity extends AppCompatActivity {
                         int tmp_len = buffer.toString().length();
                         current_email = buffer.toString().substring(1, tmp_len-1);
                     }
-                    else if(flag_login_signup == val_signup)
-                        current_email = tmp_email;
+                    else if(flag_login_signup == val_signup) {
+                        current_email = sign_email;
+                        Log.d("출력", "doInBackground: >>>>>>>>>>> + " + current_email );
+                    }
 
                     // 현재 이메일 임시로 저장해두기
                     SharedPreferences sharedPreferences = getSharedPreferences("loginFile",Context.MODE_PRIVATE);
@@ -382,6 +400,10 @@ public class LoginActivity extends AppCompatActivity {
                     editor.commit();
                     System.out.println("cur " + current_email);
                     System.out.println("response : "+buffer.toString());
+
+                    // 현재 이메일 임시로 저장해두기
+                    editor.putString("", current_email);
+                    editor.commit();
 
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();

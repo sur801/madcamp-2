@@ -1,10 +1,11 @@
 # Mad Camp 2nd week
 
-**팀원 이름 :** 서유림, 김상윤
+**팀원 이름** : 서유림, 김상윤
 
 **프로젝트 기간** : 2020.07.16 ~ 2020.07.22
 
-**개발 환경 **: Android Studio, Java, Retrofit API, Node.js, Mongoose, Mongo DB
+**개발 환경**: Android Studio, Java, Retrofit API, Node.js, Mongoose, Mongo DB  
+<br/>
 
 
 
@@ -15,7 +16,8 @@
   - 영화 사진과 함께 리뷰를 써서 기록하고 친구를 맺은 사람의 리뷰도 열람 가능. 
   - 서로의 게시물 좋아요 누르기 기능.
   - 회원가입으로 계정 생성 후 로그인 Or 페이스북 계정을 통한 로그인 가능
-  -  네이버 영화 API를 통해 영화 정보 확인 가능
+  -  네이버 영화 API를 통해 영화 정보 확인 가능  
+  
 
 - 본인 역할
 
@@ -23,9 +25,11 @@
 
   - Retrofit API를 이용해 Node.js 서버와 통신. 영화 리뷰 작성/삭제/친구들의 리뷰 보기/좋아요 기능 구현.
 
-  - Naver 영화 API를 이용해 영화 정보 확인 기능 구현.
+  - Naver 영화 API를 이용해 영화 정보 확인 기능 구현.  
+  
 
     
+<br/>
 
 ## 구현 방식
 
